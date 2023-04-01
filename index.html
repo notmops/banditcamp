@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket Example</title>
+  </head>
+  <body>
+    <h1>WebSocket Example</h1>
+
+    <script>
+      const connectToWebSocket = (url, onOpen, onMessage, onClose, onError) => {
+        const ws = new WebSocket(url);
+
+        ws.addEventListener('open', () => {
+          console.log('WebSocket connection established');
+          if (typeof onOpen === 'function') onOpen();
+        });
+
+        ws.addEventListener('message', (event) => {
+          console.log(`WebSocket received message: ${event.data}`);
+          if (typeof onMessage === 'function') onMessage(event.data);
+        });
+
+        ws.addEventListener('close', () => {
+          console.log('WebSocket connection closed');
+          if (typeof onClose === 'function') onClose();
+        });
+
+        ws.addEventListener('error', (error) => {
+          console.error('WebSocket error:', error);
+          if (typeof onError === 'function') onError(error);
+        });
+
+        return ws;
+      };
+
+      const ws = connectToWebSocket(
+        'ws://localhost:8080',
+        () => console.log('WebSocket connection opened'),
+        (message) => console.log(`WebSocket received message: ${message}`),
+        () => console.log('WebSocket connection closed'),
+        (error) => console.error(`WebSocket error: ${error.message}`)
+      );
+    </script>
+  </body>
+</html>
