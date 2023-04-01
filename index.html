@@ -34,7 +34,7 @@
       };
 
       const ws = connectToWebSocket(
-        'ws://localhost:8080',
+        'wss://api.bandit.camp:443',
         () => console.log('WebSocket connection opened'),
         (message) => console.log(`WebSocket received message: ${message}`),
         () => console.log('WebSocket connection closed'),
